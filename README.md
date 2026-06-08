@@ -154,13 +154,6 @@ Dashboard interativo com 5 gráficos:
 
 ---
 
-## 🚀 Próximos Passos
-
-- [ ] Coleta diária automatizada com APScheduler
-- [ ] Histórico de preços — detectar variações ao longo do tempo
-- [ ] Alerta de oportunidade — notificação quando produto cai X% abaixo da média
-- [ ] Expansão para outras categorias — calçados, acessórios, infantil
-- [ ] Modelo preditivo — prever probabilidade de venda por faixa de preço
 
 ---
 

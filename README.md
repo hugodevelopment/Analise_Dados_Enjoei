@@ -57,6 +57,22 @@ enjoei-market-intelligence/
 ### 1. Visão geral do marketplace
 Perfil completo da oferta — ticket médio, distribuição de descontos, proporção novo vs usado.
 
+```sql
+-- ── 1. VISÃO GERAL DO MARKETPLACE ─────────────────────────────────────────────
+-- Pergunta: Qual o perfil geral dos produtos listados?
+SELECT
+    COUNT(*)                                    AS total_produtos,
+    ROUND(AVG(preco_atual), 2)                  AS ticket_medio,
+    ROUND(MIN(preco_atual), 2)                  AS menor_preco,
+    ROUND(MAX(preco_atual), 2)                  AS maior_preco,
+    SUM(CASE WHEN tem_desconto = 1 THEN 1 END)  AS com_desconto,
+    ROUND(AVG(CASE WHEN tem_desconto = 1
+        THEN desconto_pct END), 2)              AS desconto_medio_pct,
+    SUM(CASE WHEN usado = 1 THEN 1 END)         AS produtos_usados,
+    SUM(CASE WHEN frete_gratis = 1 THEN 1 END)  AS frete_gratis
+FROM produtos;
+```
+
 ### 2. Performance por subcategoria
 Identificação de quais categorias concentram mais valor e mais oferta.
 
@@ -71,10 +87,7 @@ GROUP BY subcategoria
 ORDER BY ticket_medio DESC
 ```
 
-### 3. Marcas com maior desconto
-Ranking de marcas que mais reduzem preço para girar estoque.
-
-### 4. Ranking por categoria — Window Function
+### 3. Ranking por categoria — Window Function
 Produto mais caro de cada categoria usando `ROW_NUMBER() OVER (PARTITION BY)`.
 
 ```sql
@@ -90,7 +103,7 @@ WITH ranking AS (
 SELECT * FROM ranking WHERE rank_preco = 1
 ```
 
-### 5. Produtos abaixo da média — Subquery correlacionada
+### 4. Produtos abaixo da média — Subquery correlacionada
 Identifica oportunidades de compra comparando cada produto com a média da sua própria categoria.
 
 ```sql
@@ -105,7 +118,7 @@ FROM (
 ORDER BY diferenca ASC
 ```
 
-### 6. Score de atratividade — CTE
+### 5. Score de atratividade — CTE
 Score composto que combina desconto, preço acessível e condição do produto para ranquear as melhores oportunidades.
 
 ```sql

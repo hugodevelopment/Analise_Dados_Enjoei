@@ -156,6 +156,12 @@ Ticket médio de R$192 (novo) vs R$138 (usado) — gap menor do que o esperado, 
 
 ---
 
+<img width="747" height="410" alt="image" src="https://github.com/user-attachments/assets/7541dc8c-18d0-4bf3-bf2e-0c9cb3467136" />
+
+<img width="672" height="313" alt="image" src="https://github.com/user-attachments/assets/e5da77f3-fae4-425f-9af4-67078e2b8e33" />
+
+
+
 ## 📈 Visualizações
 
 Dashboard interativo com 5 gráficos:

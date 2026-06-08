@@ -1,1 +1,181 @@
-# Analise_Dados_Enjoei
+# 🛍️ Enjoei Market Intelligence | Web Scraping + SQL + Data Visualization
+
+> *"Antes de comprar ou vender no Enjoei, você deveria ver esses dados."*
+
+---
+
+## 💭 O Problema
+
+O Enjoei tem mais de 10 mil produtos listados só na categoria de roupas femininas. Compradores não sabem se estão pagando justo. Vendedores não sabem como precificar para competir.
+
+Este projeto responde:
+> **"Quais categorias têm mais valor? Quais marcas oferecem os maiores descontos? Quais produtos são as melhores oportunidades de compra agora?"**
+
+---
+
+## 🔧 Como os dados foram coletados
+
+A maioria dos projetos de marketplace usa datasets genéricos do Kaggle. Este projeto coleta **dados reais e atuais** diretamente do Enjoei via engenharia reversa da API interna.
+
+```
+Inspeção do DevTools (Network)
+        ↓
+Identificação do endpoint GraphQL interno
+        ↓
+Requisição autenticada via browser session
+        ↓
+JSON estruturado com produtos reais
+        ↓
+Pipeline ETL → CSV → SQLite
+```
+
+Essa abordagem garante dados frescos — não um snapshot de 2 anos atrás.
+
+---
+
+## 🏗️ Arquitetura do Projeto
+
+```
+enjoei-market-intelligence/
+├── scraper/
+│   └── enjoei_scraper.py      ← coleta via API GraphQL interna
+├── coletor_browser.js         ← script para coleta em massa no browser
+├── data/
+│   ├── produtos_enjoei.csv    ← dados brutos coletados
+│   └── enjoei.db              ← banco SQLite para análise SQL
+├── sql/
+│   └── analises_enjoei.sql    ← queries de negócio avançadas
+├── analysis/
+│   └── visualizacoes.py       ← gráficos e insights visuais
+└── README.md
+```
+
+---
+
+## 📊 Análises SQL Desenvolvidas
+
+### 1. Visão geral do marketplace
+Perfil completo da oferta — ticket médio, distribuição de descontos, proporção novo vs usado.
+
+### 2. Performance por subcategoria
+Identificação de quais categorias concentram mais valor e mais oferta.
+
+```sql
+SELECT
+    subcategoria,
+    COUNT(*)                   AS qtd_produtos,
+    ROUND(AVG(preco_atual), 2) AS ticket_medio,
+    ROUND(MAX(preco_atual), 2) AS preco_max
+FROM produtos
+GROUP BY subcategoria
+ORDER BY ticket_medio DESC
+```
+
+### 3. Marcas com maior desconto
+Ranking de marcas que mais reduzem preço para girar estoque.
+
+### 4. Ranking por categoria — Window Function
+Produto mais caro de cada categoria usando `ROW_NUMBER() OVER (PARTITION BY)`.
+
+```sql
+WITH ranking AS (
+    SELECT
+        subcategoria, titulo, marca, preco_atual,
+        ROW_NUMBER() OVER (
+            PARTITION BY subcategoria
+            ORDER BY preco_atual DESC
+        ) AS rank_preco
+    FROM produtos
+)
+SELECT * FROM ranking WHERE rank_preco = 1
+```
+
+### 5. Produtos abaixo da média — Subquery correlacionada
+Identifica oportunidades de compra comparando cada produto com a média da sua própria categoria.
+
+```sql
+SELECT titulo, marca, preco_atual,
+       ROUND(media_categoria, 2) AS media_categoria,
+       ROUND(preco_atual - media_categoria, 2) AS diferenca
+FROM (
+    SELECT *, AVG(preco_atual)
+        OVER (PARTITION BY subcategoria) AS media_categoria
+    FROM produtos
+) t
+ORDER BY diferenca ASC
+```
+
+### 6. Score de atratividade — CTE
+Score composto que combina desconto, preço acessível e condição do produto para ranquear as melhores oportunidades.
+
+```sql
+WITH score AS (
+    SELECT titulo, marca, preco_atual, desconto_pct,
+        ROUND(
+            (desconto_pct * 0.6)
+            + (CASE WHEN preco_atual < 100 THEN 30 ELSE 10 END)
+            + (CASE WHEN usado = 0 THEN 10 ELSE 0 END)
+        , 1) AS score_atratividade
+    FROM produtos
+    WHERE tem_desconto = 1
+)
+SELECT * FROM score ORDER BY score_atratividade DESC
+```
+
+---
+
+## 💡 Insights que os dados revelaram
+
+**Casaquinhos dominam em valor**
+Ticket médio de R$503 — 17x maior que blusas (R$29). Gap enorme de posicionamento que o Enjoei poderia explorar com curadoria direcionada.
+
+**43% dos produtos têm desconto**
+Mercado de segunda mão ainda usa desconto como principal alavanca de conversão.
+
+**Renner e LV Store lideram em desconto**
+Marcas mid-tier praticam descontos de até 35% para girar estoque — oportunidade clara para compradores.
+
+**Produtos novos custam 40% a mais**
+Ticket médio de R$192 (novo) vs R$138 (usado) — gap menor do que o esperado, sinalizando que vendedores de itens novos precificam de forma competitiva.
+
+**Melhor oportunidade identificada**
+"Conjunto de paetê rose gold" — produto novo, 35% de desconto, R$98 vs média de R$150 na categoria. Score de atratividade máximo.
+
+---
+
+## 📈 Visualizações
+
+Dashboard interativo com 5 gráficos:
+- Ticket médio por categoria
+- Distribuição de produtos (donut)
+- Marcas com maior desconto (horizontal bar)
+- Novo vs Usado — comparativo de ticket
+- Score de atratividade — top 5 oportunidades
+
+---
+
+## 🚀 Próximos Passos
+
+- [ ] Coleta diária automatizada com APScheduler
+- [ ] Histórico de preços — detectar variações ao longo do tempo
+- [ ] Alerta de oportunidade — notificação quando produto cai X% abaixo da média
+- [ ] Expansão para outras categorias — calçados, acessórios, infantil
+- [ ] Modelo preditivo — prever probabilidade de venda por faixa de preço
+
+---
+
+## 🛠️ Stack Técnica
+
+- Python — requests, Pandas, Matplotlib, Seaborn
+- SQL — SQLite, window functions, CTEs, subqueries correlacionadas
+- JavaScript — coleta via API GraphQL interna do Enjoei
+- Chart.js — visualizações interativas
+
+---
+
+## 📌 Autor
+
+**Hugo Alves da Costa**
+Graduando em Física — UERJ | Analista de Dados
+
+[LinkedIn](https://www.linkedin.com/in/hugo-costa22) • [GitHub](https://github.com/hugodevelopment)

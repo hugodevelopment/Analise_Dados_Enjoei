@@ -162,7 +162,11 @@ Produtos com a classificam popular possuem 408 produtos do total com ticket méd
 ---
 
 
-https://github.com/user-attachments/assets/0b3853ee-2665-4a2b-8262-5c9188f0a584
+
+
+https://github.com/user-attachments/assets/c5f52295-696f-4124-96ba-58ea34c74aef
+
+
 
 
 

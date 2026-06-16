@@ -141,23 +141,23 @@ SELECT * FROM score ORDER BY score_atratividade DESC
 
 **Roupas masculinas têm maior ticket médio em valor**
 
-Ticket médio de R$455,09 para roupas masculinas — 1,67x maior que o ticket médio de R$:272. Roupas infantis possuem ticket médio bem abaixo da média com R$ 67
+* Ticket médio de R$455,09 para roupas masculinas — 1,67x maior que o ticket médio de R$:272. Roupas infantis possuem ticket médio bem abaixo da média com R$ 67
 
 **43% dos produtos têm desconto**
 
-Mercado de segunda mão ainda usa desconto como principal alavanca de conversão.
+* Mercado de segunda mão ainda usa desconto como principal alavanca de conversão.
 
 **Mimus Duda e Adidas lideram em desconto**
 
-Marcas mid-tier praticam descontos acima do desconto média de 18% para girar estoque — oportunidade clara para compradores.
+* Marcas mid-tier praticam descontos acima do desconto média de 18% para girar estoque — oportunidade clara para compradores.
 
 **Produtos novos custam um pouco a mais em relação a usados**
 
-Gap menor do que o esperado, sinalizando que vendedores de itens novos precificam de forma competitiva.
+* Gap menor do que o esperado, sinalizando que vendedores de itens novos precificam de forma competitiva.
 
 **Produtos populares possuem maior amostragem**
 
-Produtos com a classificam popular possuem 408 produtos do total com ticket médio de R$87.
+* Produtos com a classificam popular possuem 408 produtos do total com ticket médio de R$87.
 
 ---
 

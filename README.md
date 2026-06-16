@@ -139,26 +139,27 @@ SELECT * FROM score ORDER BY score_atratividade DESC
 
 ## 💡 Insights que os dados revelaram
 
-**Casaquinhos dominam em valor**
-Ticket médio de R$503 — 17x maior que blusas (R$29). Gap enorme de posicionamento que o Enjoei poderia explorar com curadoria direcionada.
+**Roupas masculinas têm maior ticket médio em valor**
+Ticket médio de R$455,09 para roupas masculinas — 1,67x maior que o ticket médio de R$:272. Roupas infantis possuem ticket médio bem abaixo da média com R$ 67
 
 **43% dos produtos têm desconto**
 Mercado de segunda mão ainda usa desconto como principal alavanca de conversão.
 
-**Renner e LV Store lideram em desconto**
-Marcas mid-tier praticam descontos de até 35% para girar estoque — oportunidade clara para compradores.
+**Mimus Duda e Adidas lideram em desconto**
+Marcas mid-tier praticam descontos acima do desconto média de 18% para girar estoque — oportunidade clara para compradores.
 
-**Produtos novos custam 40% a mais**
-Ticket médio de R$192 (novo) vs R$138 (usado) — gap menor do que o esperado, sinalizando que vendedores de itens novos precificam de forma competitiva.
+**Produtos novos custam um pouco a mais em relação a usados**
+ Gap menor do que o esperado, sinalizando que vendedores de itens novos precificam de forma competitiva.
 
-**Melhor oportunidade identificada**
-"Conjunto de paetê rose gold" — produto novo, 35% de desconto, R$98 vs média de R$150 na categoria. Score de atratividade máximo.
+**Produtos populares possuem maior amostragem**
+"Produtos com a classificam popular possuem 408 produtos do total com ticket médio de R$87.
 
 ---
 
-<img width="747" height="410" alt="image" src="https://github.com/user-attachments/assets/7541dc8c-18d0-4bf3-bf2e-0c9cb3467136" />
 
-<img width="672" height="313" alt="image" src="https://github.com/user-attachments/assets/e5da77f3-fae4-425f-9af4-67078e2b8e33" />
+https://github.com/user-attachments/assets/0b3853ee-2665-4a2b-8262-5c9188f0a584
+
+
 
 
 
@@ -166,10 +167,9 @@ Ticket médio de R$192 (novo) vs R$138 (usado) — gap menor do que o esperado, 
 
 Dashboard interativo com 5 gráficos:
 - Ticket médio por categoria
-- Distribuição de produtos (donut)
+- Distribuição de produtos com desconto (donut)
 - Marcas com maior desconto (horizontal bar)
 - Novo vs Usado — comparativo de ticket
-- Score de atratividade — top 5 oportunidades
 
 ---
 
